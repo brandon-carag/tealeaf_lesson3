@@ -62,9 +62,51 @@ def gameover_message(status)
   end
 end
 
+
+#================================IMAGE MAPPING METHODS===========================================
+#This function maps 
+def mapper(character)
+  case 
+  when character=="J" then "jack"
+  when character=="Q" then "queen"
+  when character=="K" then "king"
+  when character=="A" then "ace"
+  else character
+  end
+
+end
+
+
+#This function should take a cards array and convert it into
+#an array of the names of the images
+def image_names(arr)
+arr.map{|x|case when x[0]=="H" then "hearts_"+x[1..2]+".jpg"
+when x[0]=="S" then "spades_"+x[1..2]+".jpg"
+when x[0]=="C" then "clubs_"+x[1..2]+".jpg"
+when x[0]=="D" then "diamonds_"+x[1..2]+".jpg"
+end}
+end
+
+#This function should output the paths to the images
+#the question is how can i get this function to return
+#the img src tags for all the elements in the array.
+def show_images(names_of_images_array)
+names_of_images_array.each do |x| puts "<img src=/images/cards/"+x+"/>"
+
+end
+# names_of_images_array.each do |x| "hello" end
+  # "<img src=/images/cards/"+x+"/>"
+# end
+end
+  
+
 end
 
 #================================GET ACTIONS====================================================
+
+get '/tester' do 
+  erb :tester
+end
 
 get '/' do 
   session["bank"]=500
@@ -87,6 +129,7 @@ session["dealer_cards"]={}
 
 2.times {draw_card(session["deck"],session["dealer_cards"])}
 2.times {draw_card(session["deck"],session["player1_cards"])}
+
 
 
 if hand_total(session["dealer_cards"])==21 && hand_total(session["player1_cards"])==21

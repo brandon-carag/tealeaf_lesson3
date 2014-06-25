@@ -1,14 +1,30 @@
 <h4>Here are the cards from the initial deal</h4>
-</br>
-</br>
+
+
+
+
 The dealer's cards are:
-<%=session["dealer_cards"].keys%>
+</br>
+<% image_names(session["dealer_cards"].keys).each do |x| %>
+<%="<img src=/images/cards/"+x+"/>  " %>
+<% end %>
+</br>
+<%=(session["dealer_cards"].keys)%>
   The dealer's hand total is: <%=hand_total(session["dealer_cards"])%>
 </br>
 </br>
+
+
 The player's cards are:
+</br>
+<% image_names(session["player1_cards"].keys).each do |x| %>
+<%="<img src=/images/cards/"+x+"/>  " %>
+<% end %>
+</br>
+
 <%=session["player1_cards"].keys%>
-  The player's hand total is: <%=hand_total(session["player1_cards"])%>
+
+The player's hand total is: <%=hand_total(session["player1_cards"])%>
 </br>
 </br>
 
