@@ -4,11 +4,12 @@ The dealer's cards are:
 <%=session["dealer_cards"].keys%>
   The dealer's hand total is: <%=hand_total(session["dealer_cards"])%>
 </br>
-</br>
 The player's cards are:
 <%=session["player1_cards"].keys%>
-  The player's hand total is: <%=hand_total(session["player1_cards"])%>
+  The player's hand total is: <%=hand_total(session["player1_cards"])%>.
 
 <%=gameover_message(session[:game_status])%>
-The game is over.
 
+<form action='/game' method='get'>  
+  <input type='submit' class='btn' value="Click to Play Again">
+</form>

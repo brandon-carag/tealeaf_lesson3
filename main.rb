@@ -54,8 +54,10 @@ def gameover_message(status)
   if status=="tie"
     "It's a tie!"
   elsif status=="player_wins"
-    "#{session[:player_name]}"+"wins!"
+    session["bank"]+=session["bet"].to_i
+    " #{session[:player_name]}"+" wins!"
   elsif status=="dealer_wins"
+    session["bank"]-=session["bet"].to_i
     "Dealer wins and you lose!"
   end
 end
@@ -65,6 +67,7 @@ end
 #================================GET ACTIONS====================================================
 
 get '/' do 
+  session["bank"]=500
   erb :home
 end
 
@@ -81,18 +84,19 @@ session["deck"]={"H2"=>2,"H3"=>3,"H4"=>4,"H5"=>5,"H6"=>6,"H7"=>7,"H8"=>8,"H9"=>9
 session["player1_cards"]={}
 session["dealer_cards"]={}
 
+
 2.times {draw_card(session["deck"],session["dealer_cards"])}
 2.times {draw_card(session["deck"],session["player1_cards"])}
 
 
-if hand_total(session["player1_cards"])==21 && hand_total(session["player1_cards"])==21
-  game_status="tie"
+if hand_total(session["dealer_cards"])==21 && hand_total(session["player1_cards"])==21
+  session["game_status"]="tie"
   erb :gameover
 elsif hand_total(session["player1_cards"])==21
-  game_status="player_wins"
+  session["game_status"]="player_wins"
   erb :gameover
-elsif hand_total(session["player1_cards"])==21
-  game_status="dealer_wins"
+elsif hand_total(session["dealer_cards"])==21
+  session["game_status"]="dealer_wins"
   erb :gameover
 else
 erb :show_cards
@@ -141,16 +145,16 @@ end
 post '/dealer_hits' do
   if hand_total(session["dealer_cards"]) >=17
     if hand_total(session["dealer_cards"]) > hand_total(session["player1_cards"])
-      game_status="dealer_wins"
+      session["game_status"]="dealer_wins"
       redirect '/gameover'
     else
-      game_status="player_wins"
+      session["game_status"]="player_wins"
       redirect '/gameover'
     end
   else
     draw_card(session["deck"],session["dealer_cards"])
     if bust_check(hand_total(session["dealer_cards"]))==true
-      game_status="player_wins"
+      session["game_status"]="player_wins"
       redirect '/gameover'
     else
       redirect '/dealers_turn'
