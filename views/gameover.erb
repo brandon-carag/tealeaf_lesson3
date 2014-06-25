@@ -1,0 +1,14 @@
+<h4>GAMEOVER</h4>
+
+The dealer's cards are:
+<%=session["dealer_cards"].keys%>
+  The dealer's hand total is: <%=hand_total(session["dealer_cards"])%>
+</br>
+</br>
+The player's cards are:
+<%=session["player1_cards"].keys%>
+  The player's hand total is: <%=hand_total(session["player1_cards"])%>
+
+<%=gameover_message(session[:game_status])%>
+The game is over.
+

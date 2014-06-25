@@ -1,1 +1,13 @@
 <h4>I'm a test page</h4>
+<%=session["player1_cards"].keys%>
+
+The player's cards are:
+<%=session["player1_cards"].keys%>
+  The player's hand total is: <%=hand_total(session["player1_cards"])%>
+</br>
+</br>
+
+
+<form action='/hit_me' method='post'>  
+  <input type='submit' class='btn' value="Hit Me">
+</form>
